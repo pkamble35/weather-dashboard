@@ -1,6 +1,6 @@
-# weather-dashboard
+# Weather Dashboard
 
-https://pkamble35.github.io/weather-dashboard/
+Application URL:- https://pkamble35.github.io/weather-dashboard/
 
 
 Functionality
