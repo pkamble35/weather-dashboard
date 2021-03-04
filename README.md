@@ -1,4 +1,12 @@
 # weather-dashboard
 
+https://pkamble35.github.io/weather-dashboard/
 
-![Screenshot](assets/weatherdashboard.png)
+
+Functionality
+  1. Weather Forecast for city entered in search
+  2. Maintain Search History
+  3. Forecast for 5 days
+
+
+![Alt text](./assets/weatherdashboard.png)
