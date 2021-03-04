@@ -2,7 +2,9 @@ var requestURL = 'https://api.openweathermap.org/data/2.5/forecast?q={cityname}&
 var cities = ['Hartford'];
 var icons = 'http://openweathermap.org/img/wn/'
 $(document).ready(function () {
-
+    /**
+     * This is event triggered every time some one enters city name
+     */
     $('#button-addon2').on("click", function () {
 
         clear();
@@ -29,6 +31,10 @@ $(document).ready(function () {
         var cityName = $( this ).text();
         fetchData(cityName,true);
     });
+    /**
+     * Initialize weather app
+     * Default city is Hartford
+     */
     var initialize = function () {
         var local = JSON.parse(localStorage.getItem('cities'));
         if(local){
@@ -43,10 +49,18 @@ $(document).ready(function () {
         
         
     }
+    /**
+     * Clear data for weather on refresh
+     */
     var clear = function () {
         $("#currentData").children().empty();
         $(".card-body").children().empty();
     }
+    /**
+     * Fetch data from open weather API
+     * @param {*} cityName 
+     * @param {*} updateList 
+     */
     var fetchData = function (cityName,updateList) {
         var href = new URL(requestURL);
         href.searchParams.set('q', cityName);
@@ -63,31 +77,53 @@ $(document).ready(function () {
                
                 var weatherData = data.list[0];
                 var currentDate = weatherData.dt_txt.split(" ")[0];
-                var city = $("#currentData");
-                city.append('<h5>' + data.city.name + ' (' + currentDate + ')</h5><img alt="'+icons+weatherData.weather[0].main+'" src="'+icons+weatherData.weather[0].icon+'@2x.png"/>');
-                city.append('<p>Temperature: ' + weatherData.main.temp + ' F</p>');
-                city.append('<p>Humidity: ' + weatherData.main.humidity + '%</p>');
-                city.append('<p>Wind Speed: ' + weatherData.wind.speed + 'MPH</p>');
-                var j = 1;
-                for (var i = 1; i < data.list.length; i++) {
-
-                    var dayData = data.list[i];
-                    var nextDay = dayData.dt_txt.split(" ")[0];
-
-                    if (currentDate === nextDay) {
-
-                    } else {
-                        var day = $("#day" + j);
-                        currentDate = nextDay;
-                        day.append('<h6>' + nextDay + '</h6>');
-                        day.append('<img src="'+icons+dayData.weather[0].icon+'@2x.png"/>')
-                        day.append('<p>Temperature: ' + dayData.main.temp + ' F</p>');
-                        day.append('<p>Humidity: ' + dayData.main.humidity + '%</p>');
-                        j++;
-                    }
-
-                }
+                currentWeather(data, currentDate, weatherData);
+                currentDate = nextDays(data, currentDate);
             }).catch(error => console.error(error));
+    }
+    /**
+     * This function gets data for current day weather
+     * @param {*} data 
+     * @param {*} currentDate 
+     * @param {*} weatherData 
+     */
+    var currentWeather = function currentWeather(data, currentDate, weatherData) {
+        var city = $("#currentData");
+        city.append('<h5>' + data.city.name + ' (' + currentDate + ')</h5><img alt="' + icons + weatherData.weather[0].main + '" src="' + icons + weatherData.weather[0].icon + '@2x.png"/>');
+        city.append('<p>Temperature: ' + weatherData.main.temp + ' F</p>');
+        city.append('<p>Humidity: ' + weatherData.main.humidity + '%</p>');
+        city.append('<p>Wind Speed: ' + weatherData.wind.speed + 'MPH</p>');
+    }
+
+    /**
+     * This function maps weather data for next 4 days
+     * @param {*} data 
+     * @param {*} currentDate 
+     */
+    var nextDays = function nextDays(data, currentDate) {
+        var j = 1;
+        for (var i = 1; i < data.list.length; i++) {
+    
+            var dayData = data.list[i];
+            var nextDay = dayData.dt_txt.split(" ")[0];
+    
+            if (currentDate === nextDay) {
+            } else {
+                var day = $("#day" + j);
+                currentDate = nextDay;
+                day.append('<h6>' + nextDay + '</h6>');
+                day.append('<img src="' + icons + dayData.weather[0].icon + '@2x.png"/>');
+                day.append('<p>Temperature: ' + dayData.main.temp + ' F</p>');
+                day.append('<p>Humidity: ' + dayData.main.humidity + '%</p>');
+                j++;
+            }
+    
+        }
+        return currentDate;
     }
     initialize();
 });
+
+
+
+
