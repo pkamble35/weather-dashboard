@@ -53,8 +53,8 @@ $(document).ready(function () {
      * Clear data for weather on refresh
      */
     var clear = function () {
-        $("#currentData").children().empty();
-        $(".card-body").children().empty();
+        $("#currentData").children().remove();
+        $(".card-body").children().remove();
     }
     /**
      * Fetch data from open weather API
