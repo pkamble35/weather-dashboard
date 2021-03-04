@@ -10,7 +10,7 @@ $(document).ready(function () {
         clear();
         var cityName = $('#basic-url').val();
         var local = JSON.parse(localStorage.getItem('cities'));
-        $("#cityList").append('<li class="list-group-item"><a class="nav-link history" href="#">' + data.city.name + '<a></li>');
+        $("#cityList").append('<li class="list-group-item"><a class="nav-link history" href="#">' + cityName + '<a></li>');
        
         if(local){
             if(local.length==10){
