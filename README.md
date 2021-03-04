@@ -9,4 +9,4 @@ Functionality
   3. Forecast for 5 days
 
 
-![Alt text](./assets/weatherdashboard.png)
+![Alt text](./assets/weatherdashboard.JPG)
