@@ -7,7 +7,7 @@ Technologies:-
   3. CSS
   4. Jquery
   5. Open Weather API
-  6. 
+ 
 Application URL:- https://pkamble35.github.io/weather-dashboard/
 
 
